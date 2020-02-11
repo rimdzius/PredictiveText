@@ -1,0 +1,12 @@
+name: textpredictor
+title: textpredictor
+username:
+account: rimdzius
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1791685
+bundleId: 2790986
+url: https://rimdzius.shinyapps.io/textpredictor/
+when: 1581398237.33684
+asMultiple: FALSE
+asStatic: FALSE

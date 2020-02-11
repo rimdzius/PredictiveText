@@ -1,0 +1,80 @@
+---
+title: "Text Predictor"
+author: "Daniel Rimdzius"
+date: "2/10/2020"
+output:
+      ioslides_presentation:
+            smaller: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(shiny)
+```
+
+## Application Description
+Application: https://rimdzius.shinyapps.io/textpredictor/
+
+The application allows a user to type into the text box. It is an interactive
+application, and does not require any button to begin the analysis.
+
+The text box itself can be clicked and dragged to change its size, if needed.
+```{r}
+textAreaInput(inputId = "inputtext", label = NULL, value = "", width = "500px", height = "200px", resize = "both")
+actionButton(inputId = "button", label = "prediction")
+```
+
+Once the user stops typing, the application will run the predictive algorithm.
+The predicted word will be shown in the button below the input box. A user
+can simply click the button to add it to the end of their text.
+
+
+## Algorithm Description
+The script files can all be viewed at https://github.com/rimdzius/PredictiveText.
+
+1. The processing begins before the user begins typing: if there is no input in the
+text box, the function will return a sample() of a list of the top 100 most common
+words in the english language, obtained from wikipedia.
+
+2. While processing, the application will tokenize the user text, removing any numbers,
+punctuation or symbols. It then loops over the 2-, 3- and 4-gram datasets that
+have been preprocessed. It also loops over 1, 2 and 3 of the final words input
+in each of these ngram datasets.
+
+3. These preprocessed ngram datasets (viewable on github) are ordered in decreasing
+frequency. Any matches found will be saved with the word and probability data,
+based on the frequency of the match vs the frequency of the previous words. (This
+is based on the Katz back-off model.)
+
+4. The highest probability set is used, returning the last word in the set. If 
+no matches are returned at all, the top100 words dataset (mentioned in step 1)
+will be sampled from again.
+
+
+## Other Notes & Preprocessing
+One thing to mention is that this application itself does not utilize set.seed().
+This was done purposefully to allow a bit more randomization to the sampling of
+the top100 words. However, all preprocessing steps are reproducible.
+
+There are several .R scripts on the github page that show the preprocessing steps.
+
+* preprocessing.R: This is the main function call, preprocessing()
+* download_data.R: This simply downloads and unzips the data, if it's not already present.
+* create_tokens.R: This reads the data in, tokenizes and cleans up the tokens.
+* create_ngram_matrix.R: This is the bulk of the work. This will create the ngram datasets. It will return a dataframe including these ngram terms, and the frequencies that they are used.
+* write_files.R: Simply writes the dataframes into an "ngram.txt" file, and a "ngram_freq.txt" file.
+
+
+## Future Steps and Innovations
+Text prediction is a bit difficult in its own right: getting a large enough
+sample dataset, including large n-gram files, and keeping the overall size of
+the app down.
+
+Since this app would be designed for a user's phone, the clear answer is to
+utilize the user's own inputs (with permission!) to train the algorithm.
+
+Instead of using an enormous dataset of the English language, including news
+articles, blog and twitter posts, we can use a smaller dataset to set the framework,
+and then use the user's own data entry to store a database of their most commonly
+used words, terms and phrases.
+
