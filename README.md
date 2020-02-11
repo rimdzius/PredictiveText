@@ -21,3 +21,10 @@ The goal of this exercise is to create a product to highlight the prediction alg
 - How would you describe the experience of using this app?
 - Does the app present a novel approach and/or is particularly well done?
 - Would you hire this person for your own data science startup company?
+
+# Included Files:
+- preprocessing.R: This is the first script required to download and preprocess any data.
+- PredictiveText.Rmd: This is the presentation slides for the application.
+- /textpredictor/: This is the folder containing the application files.
+- /ngrams/: This is the folder containing the preprocessing() files.
+- milestone.Rmd: This is the milestone report (the mid-term, if you will, for the course.)
